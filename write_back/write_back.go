@@ -1,7 +1,6 @@
-package write_back
+package main
 
 import (
-	"fmt"
 	"sync"
 )
 
@@ -33,12 +32,10 @@ func (wbc *WriteBackCache) Read(key string) (string, bool) {
 	defer wbc.mu.RUnlock()
 
 	if val, exist := wbc.cache[key]; exist {
-		fmt.Printf("loaded from cache %v", val)
 		return val, true
 	}
 
 	if val, exist := wbc.persistentStorage[key]; exist {
-		fmt.Printf("loaded from peristent storage %v", val)
 		return val, true
 	}
 	return "", false
